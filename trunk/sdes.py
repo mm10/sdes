@@ -132,9 +132,12 @@ def fk(ent, k):
     
  
  
-def sdes(M,K):
-    """algoritmo principal"""
-    k1,k2 = claves(K) #genero las claves
+def sdes(M,K,sentido='cod'):
+    """algoritmo principal codifica"""
+    if sentido == 'cod':
+    	k1,k2 = claves(K) #genero las claves para codificar
+    elif sentido == 'dec':
+	k2,k1 = claves(K) #genero las claves para decodificar (orden inverso)
     sdes = ip(M) 
     sdes = fk(sdes,k1) #primera ronda
     sdes = sw(sdes)
@@ -145,10 +148,19 @@ def sdes(M,K):
     
        
 if __name__ == '__main__':
+	
 	M = [1,0,1,1,1,1,0,1]
 	K = [1,0,1,0,0,0,0,0,1,0]
 	#K = ['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10']
-	print "Caracter codificado: " +  str(sdes(M,K))
+	cod = sdes(M,K, 'cod')
+	print "Caracter codificado: " +  str(cod)
+	print "decoficandoooooooo"
+	dec = sdes(cod,K, 'dec')
+	print "Caracter decodificado: " +  str(dec)
+	if dec == M:
+		print "Son iguales"
+	else:
+		print "algo huele mal en dinamarca"
 
 
  
